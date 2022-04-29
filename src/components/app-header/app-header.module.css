@@ -1,0 +1,30 @@
+.header {
+  width: 100%;
+  min-height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1C1C21;
+}
+
+.header__menu {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__menu-wrapper {
+  display: flex;
+}
+
+.header__menu-item {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
