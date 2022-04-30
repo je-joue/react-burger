@@ -1,0 +1,26 @@
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+}
+
+.categories-list {
+  max-height: 60vh;
+  overflow-y: scroll;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+  
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.categories-list::-webkit-scrollbar {
+  width: 8px;               /* ширина scrollbar */
+}
+.categories-list::-webkit-scrollbar-track {
+  background: #2F2F37;        /* цвет дорожки */
+}
+.categories-list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;    /* цвет плашки */
+}

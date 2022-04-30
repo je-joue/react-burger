@@ -1,4 +1,4 @@
-const ingredients = [
+export const ingredients = [
   {
    "_id":"60666c42cc7b410027a1a9b1",
    "name":"Краторная булка N-200i",
@@ -209,4 +209,26 @@ const ingredients = [
    "image_large":"https://code.s3.yandex.net/react/code/bun-01-large.png",
    "__v":0
   }
+]
+
+const ingredientsSauce = ingredients.filter(item => item.type === "sauce");
+const ingredientsBun = ingredients.filter(item => item.type === "bun");
+const ingredientsMain = ingredients.filter(item => item.type === "main");
+
+export const ingredientCategories = [
+  {
+    "id":"1",
+    "title":"Булки",
+    "ingredients": ingredientsBun
+  },
+  {
+    "id":"2",
+    "title":"Соусы",
+    "ingredients": ingredientsSauce
+  },
+  {
+    "id":"3",
+    "title":"Начинки",
+    "ingredients": ingredientsMain
+  },
 ]
