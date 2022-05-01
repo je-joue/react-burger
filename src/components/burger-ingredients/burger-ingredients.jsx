@@ -7,13 +7,13 @@ function BurgerIngredients({ ingredients, ingredientCategories }) {
   const [current, setCurrent] = React.useState('BUN');
 
   return (
-    <section>
+    <section className={styles['ingredients-container']}>
       <div className={`${styles.tabs} mb-5`}>
         <Tab value="BUN" active={current === 'BUN'} onClick={setCurrent}>Булки</Tab>
         <Tab value="SAUCE" active={current === 'SAUCE'} onClick={setCurrent}>Соусы</Tab>
         <Tab value="MAIN" active={current === 'MAIN'} onClick={setCurrent}>Начинки</Tab>
       </div>
-      <ul className={`${styles['categories-list']} pl-4`}>
+      <ul className={`${styles['categories-list']}`}>
         {ingredientCategories.map((category) => (
           <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} />
         ))}
