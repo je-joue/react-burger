@@ -210,25 +210,3 @@ export const ingredients = [
    "__v":0
   }
 ]
-
-const ingredientsSauce = ingredients.filter(item => item.type === "sauce");
-const ingredientsBun = ingredients.filter(item => item.type === "bun");
-const ingredientsMain = ingredients.filter(item => item.type === "main");
-
-export const ingredientCategories = [
-  {
-    "id":"1",
-    "title":"Булки",
-    "ingredients": ingredientsBun
-  },
-  {
-    "id":"2",
-    "title":"Соусы",
-    "ingredients": ingredientsSauce
-  },
-  {
-    "id":"3",
-    "title":"Начинки",
-    "ingredients": ingredientsMain
-  },
-]
