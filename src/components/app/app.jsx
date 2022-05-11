@@ -20,22 +20,6 @@ function App() {
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  // getCards() {
-  //   return fetch(`${this.baseURL}/cards`, {
-  //     headers: this.headers
-  //   })
-  //   .then(res => this._checkResponse(res));
-  // }
-
-  // Promise.all([api.getUserData(), api.getCards()])
-  // .then(([userData, cards]) => {
-  //   userId = userData._id;
-  //   userInfo.setUserInfo(userData);
-  //   userInfo.setAvatar(userData);
-  //   cardsList.renderItems(cards);
-  // })
-  // .catch(err => console.log(err))
-
   const getIngredients = () => {
     fetch(`${apiConfig.baseURL}ingredients`, {
       headers: apiConfig.headers
