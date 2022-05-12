@@ -1,0 +1,25 @@
+.ingredient-details-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.nutrition-values-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.nutrition-values-item {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}

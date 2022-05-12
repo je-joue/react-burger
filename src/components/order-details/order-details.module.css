@@ -1,0 +1,15 @@
+.order-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.done {
+  background-image: url('../../images/done.svg');
+  height: 120px;
+  width: 120px;
+  background-position: center;
+  background-repeat: no-repeat;
+}

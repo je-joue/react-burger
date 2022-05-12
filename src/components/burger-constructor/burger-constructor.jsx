@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/propTypes'
 
-function BurgerConstructor({ ingredients }) {
+function BurgerConstructor({ ingredients, onOrderButtonClick }) {
   return (
     <section className={`${styles['constructor-container']} pl-4`}>
       <div className={`${styles.constructor} mb-10`}>
@@ -49,7 +49,7 @@ function BurgerConstructor({ ingredients }) {
             <CurrencyIcon type='primary' />
           </div>
         </div>
-        <Button type="primary" size="large">Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={onOrderButtonClick}>Оформить заказ</Button>
       </div>
     </section>
   );

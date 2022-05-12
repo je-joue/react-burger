@@ -2,9 +2,9 @@ import styles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/propTypes';
 
-function BurgerIngredient({ ingredient }) {
+function BurgerIngredient({ ingredient, onCardClick }) {
   return (
-    <li className={`${styles['ingredient-card']} pr-4 pl-4`}>
+    <li className={`${styles['ingredient-card']} pr-4 pl-4`} onClick={()=> onCardClick(ingredient)}>
       <img src={ingredient.image} alt={ingredient.name} />
       <div className={`${styles['ingredient-price']} mt-2 mb-2`}>
         <span className='text text_type_digits-default mr-2'>{ingredient.price}</span>

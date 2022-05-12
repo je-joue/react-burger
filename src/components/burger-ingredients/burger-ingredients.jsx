@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { ingredientPropType } from '../../utils/propTypes';
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients({ ingredients, onCardClick }) {
   const [currentTab, setCurrentTab] = React.useState('buns');
 
   const categoriesListRef = useRef(null);
@@ -77,7 +77,7 @@ function BurgerIngredients({ ingredients }) {
 
       <ul className={`${styles['categories-list']}`} ref={categoriesListRef}>
         {ingredientCategories.map((category) => (
-          <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} ref={category.ref} />
+          <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} ref={category.ref} onCardClick={onCardClick} />
         ))}
       </ul>
 
