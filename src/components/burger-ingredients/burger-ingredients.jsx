@@ -13,16 +13,16 @@ function BurgerIngredients({ ingredients, onCardClick }) {
   const saucesTitleRef = useRef(null);
   const mainTitleRef = useRef(null);
 
-  // const handleScroll = () => {
-  //   const currentScroll = categoriesListRef.current.scrollTop;
-  //   const bunsTitlePos = Math.abs(bunsTitleRef.current.offsetTop - currentScroll);
-  //   const saucesTitlePos = Math.abs(saucesTitleRef.current.offsetTop - currentScroll);
-  //   const mainTitlePos = Math.abs(mainTitleRef.current.offsetTop - currentScroll);
+  const handleScroll = () => {
+    const currentScroll = categoriesListRef.current.scrollTop + categoriesListRef.current.offsetTop;
+    const bunsTitlePos = bunsTitleRef.current.offsetTop;
+    const saucesTitlePos = saucesTitleRef.current.offsetTop;
+    const mainTitlePos = mainTitleRef.current.offsetTop;
 
-  //   if (bunsTitlePos < saucesTitlePos) setCurrentTab('buns');
-  //   if (saucesTitlePos < bunsTitlePos && saucesTitlePos < mainTitlePos) setCurrentTab('sauces');
-  //   if (mainTitlePos < saucesTitlePos) setCurrentTab('main');
-  // }
+    if (currentScroll >= bunsTitlePos && currentScroll < saucesTitlePos) setCurrentTab('buns');
+    if (currentScroll >= saucesTitlePos && currentScroll < mainTitlePos) setCurrentTab('sauces');
+    if (currentScroll >= mainTitlePos) setCurrentTab('main');
+  }
 
   function handleTabClick(el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -75,7 +75,7 @@ function BurgerIngredients({ ingredients, onCardClick }) {
         </Tab>
       </div>
 
-      <ul className={`${styles['categories-list']}`} ref={categoriesListRef}>
+      <ul className={`${styles['categories-list']}`} ref={categoriesListRef} onScroll={handleScroll}>
         {ingredientCategories.map((category) => (
           <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} ref={category.ref} onCardClick={onCardClick} />
         ))}
