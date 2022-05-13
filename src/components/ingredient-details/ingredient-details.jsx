@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
+import { ingredientPropType } from '../../utils/propTypes';
 
 const IngredientDetails = ({ currentIngredient}) => {
   console.log(currentIngredient);
@@ -30,3 +31,7 @@ const IngredientDetails = ({ currentIngredient}) => {
 };
 
 export default IngredientDetails;
+
+IngredientDetails.propTypes = {
+  currentIngredient: ingredientPropType.isRequired,
+}

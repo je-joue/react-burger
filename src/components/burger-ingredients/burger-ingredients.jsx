@@ -89,5 +89,6 @@ export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  onCardClick: PropTypes.func.isRequired
 };
 

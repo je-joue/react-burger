@@ -9,7 +9,6 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getIngredients } from '../../utils/api';
 
 function App() {
-  // states
   const [ingredients, setIngredients] = useState([]);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
   const [isIngredientInfoOpened, setIngredientInfoOpened] = React.useState(false);
@@ -25,25 +24,20 @@ function App() {
     .catch(err => console.log(err));
   }
 
-  // Открытие окна с заказом
   const handleOrderButtonClick = () => {
     setIsOrderDetailsOpened(true);
   }
 
-  // Открытие карточки ингредиента
   const handleIngredientClick = (ingredient) => {
     setIngredientInfoOpened(true);
     setCurrentIngredient(ingredient);
   }
 
-
-  // Закрытие всех модалок
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
     setIngredientInfoOpened(false);
   };
 
-  // Обработка нажатия Esc
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };
