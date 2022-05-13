@@ -36,7 +36,7 @@ const Modal = ({ title, onCloseButtonClick, onEscKeydown, children }) => {
 export default Modal;
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   onCloseButtonClick: PropTypes.func.isRequired,
   onEscKeydown: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
