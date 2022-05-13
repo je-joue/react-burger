@@ -6,7 +6,7 @@ import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { ingredientPropType } from '../../utils/propTypes';
 
 function BurgerIngredients({ ingredients, onCardClick }) {
-  const [currentTab, setCurrentTab] = React.useState('buns');
+  const [currentTab, setCurrentTab] = React.useState('bun');
 
   const categoriesListRef = useRef(null);
   const bunsTitleRef = useRef(null);
@@ -19,30 +19,65 @@ function BurgerIngredients({ ingredients, onCardClick }) {
     const saucesTitlePos = saucesTitleRef.current.offsetTop;
     const mainTitlePos = mainTitleRef.current.offsetTop;
 
-    if (currentScroll >= bunsTitlePos && currentScroll < saucesTitlePos) setCurrentTab('buns');
-    if (currentScroll >= saucesTitlePos && currentScroll < mainTitlePos) setCurrentTab('sauces');
+    if (currentScroll >= bunsTitlePos && currentScroll < saucesTitlePos) setCurrentTab('bun');
+    if (currentScroll >= saucesTitlePos && currentScroll < mainTitlePos) setCurrentTab('sauce');
     if (currentScroll >= mainTitlePos) setCurrentTab('main');
   }
 
-  function handleTabClick(el) {
+  function onTabClickScroll(el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  const handleTabClick = (e) => {
+    setCurrentTab(e);
+    if (e === "buns") onTabClickScroll(bunsTitleRef.current);
+    if (e === "sauces") onTabClickScroll(saucesTitleRef.current);
+    if (e === "main") onTabClickScroll(mainTitleRef.current);
+  }
+
+  // const ingredientCategories = React.useMemo(
+  //   () =>
+  //   [
+  //     {
+  //       "id": "1",
+  //       "title": "Булки",
+  //       "ref": bunsTitleRef,
+  //       "ingredients": ingredients.filter(item => item.type === "bun")
+  //     },
+  //     {
+  //       "id": "2",
+  //       "title": "Соусы",
+  //       "ref": saucesTitleRef,
+  //       "ingredients": ingredients.filter(item => item.type === "sauce")
+  //     },
+  //     {
+  //       "id": "3",
+  //       "title": "Начинки",
+  //       "ref": mainTitleRef,
+  //       "ingredients": ingredients.filter(item => item.type === "main")
+  //     },
+  //   ],
+  //   [ingredients]
+  // );
 
   const ingredientCategories = [
     {
       "id": "1",
+      "type": "bun",
       "title": "Булки",
       "ref": bunsTitleRef,
       "ingredients": ingredients.filter(item => item.type === "bun")
     },
     {
       "id": "2",
+      "type": "sauce",
       "title": "Соусы",
       "ref": saucesTitleRef,
       "ingredients": ingredients.filter(item => item.type === "sauce")
     },
     {
       "id": "3",
+      "type": "main",
       "title": "Начинки",
       "ref": mainTitleRef,
       "ingredients": ingredients.filter(item => item.type === "main")
@@ -52,27 +87,13 @@ function BurgerIngredients({ ingredients, onCardClick }) {
   return (
     <section className={styles['ingredients-container']}>
       <div className={`${styles.tabs} mb-5`}>
-        <Tab value="buns" active={currentTab === 'buns'}
-            onClick={(value) => {
-              setCurrentTab(value);
-              handleTabClick(bunsTitleRef.current);
-            }}>
-          Булки
-        </Tab>
-        <Tab value="sauces" active={currentTab === 'sauces'}
-            onClick={(value) => {
-              setCurrentTab(value);
-              handleTabClick(saucesTitleRef.current);
-            }}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={currentTab === 'main'}
-            onClick={(value) => {
-              setCurrentTab(value);
-              handleTabClick(mainTitleRef.current);
-            }}>
-          Начинки
-        </Tab>
+        {ingredientCategories.map((category) => (
+          <Tab value={category.type} active={currentTab === category.type}
+            key={category.id}
+            onClick={handleTabClick}>
+            {category.title}
+          </Tab>
+        ))}
       </div>
 
       <ul className={`${styles['categories-list']}`} ref={categoriesListRef} onScroll={handleScroll}>

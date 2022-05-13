@@ -25,7 +25,6 @@ function BurgerConstructor({ ingredients, onOrderButtonClick }) {
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
-                key={ingredient._id}
               />
             </li>
           ))}

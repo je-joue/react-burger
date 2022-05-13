@@ -15,14 +15,10 @@ function App() {
   const [currentIngredient, setCurrentIngredient] = React.useState([]);
 
   useEffect(() => {
-    setIngredientsData();
-  }, []);
-
-  const setIngredientsData = () => {
     getIngredients()
     .then(res => setIngredients(res.data))
     .catch(err => console.log(err));
-  }
+  }, []);
 
   const handleOrderButtonClick = () => {
     setIsOrderDetailsOpened(true);

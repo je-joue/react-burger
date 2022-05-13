@@ -4,8 +4,9 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { ingredientPropType } from '../../utils/propTypes';
 
 function BurgerIngredient({ ingredient, onCardClick }) {
+  const handleCardClick = () => onCardClick(ingredient);
   return (
-    <li className={`${styles['ingredient-card']} pr-4 pl-4`} onClick={() => onCardClick(ingredient)}>
+    <li className={`${styles['ingredient-card']} pr-4 pl-4`} onClick={handleCardClick}>
       <img src={ingredient.image} alt={ingredient.name} />
       <div className={`${styles['ingredient-price']} mt-2 mb-2`}>
         <span className='text text_type_digits-default mr-2'>{ingredient.price}</span>
