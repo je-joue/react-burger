@@ -30,59 +30,38 @@ function BurgerIngredients({ ingredients, onCardClick }) {
 
   const handleTabClick = (e) => {
     setCurrentTab(e);
-    if (e === "buns") onTabClickScroll(bunsTitleRef.current);
-    if (e === "sauces") onTabClickScroll(saucesTitleRef.current);
+    if (e === "bun") onTabClickScroll(bunsTitleRef.current);
+    if (e === "sauce") onTabClickScroll(saucesTitleRef.current);
     if (e === "main") onTabClickScroll(mainTitleRef.current);
   }
 
-  // const ingredientCategories = React.useMemo(
-  //   () =>
-  //   [
-  //     {
-  //       "id": "1",
-  //       "title": "Булки",
-  //       "ref": bunsTitleRef,
-  //       "ingredients": ingredients.filter(item => item.type === "bun")
-  //     },
-  //     {
-  //       "id": "2",
-  //       "title": "Соусы",
-  //       "ref": saucesTitleRef,
-  //       "ingredients": ingredients.filter(item => item.type === "sauce")
-  //     },
-  //     {
-  //       "id": "3",
-  //       "title": "Начинки",
-  //       "ref": mainTitleRef,
-  //       "ingredients": ingredients.filter(item => item.type === "main")
-  //     },
-  //   ],
-  //   [ingredients]
-  // );
-
-  const ingredientCategories = [
-    {
-      "id": "1",
-      "type": "bun",
-      "title": "Булки",
-      "ref": bunsTitleRef,
-      "ingredients": ingredients.filter(item => item.type === "bun")
-    },
-    {
-      "id": "2",
-      "type": "sauce",
-      "title": "Соусы",
-      "ref": saucesTitleRef,
-      "ingredients": ingredients.filter(item => item.type === "sauce")
-    },
-    {
-      "id": "3",
-      "type": "main",
-      "title": "Начинки",
-      "ref": mainTitleRef,
-      "ingredients": ingredients.filter(item => item.type === "main")
-    },
-  ]
+  const ingredientCategories = React.useMemo(
+    () =>
+    [
+      {
+        "id": "1",
+        "type": "bun",
+        "title": "Булки",
+        "ref": bunsTitleRef,
+        "ingredients": ingredients.filter(item => item.type === "bun")
+      },
+      {
+        "id": "2",
+        "type": "sauce",
+        "title": "Соусы",
+        "ref": saucesTitleRef,
+        "ingredients": ingredients.filter(item => item.type === "sauce")
+      },
+      {
+        "id": "3",
+        "type": "main",
+        "title": "Начинки",
+        "ref": mainTitleRef,
+        "ingredients": ingredients.filter(item => item.type === "main")
+      },
+    ],
+    [ingredients]
+  );
 
   return (
     <section className={styles['ingredients-container']}>

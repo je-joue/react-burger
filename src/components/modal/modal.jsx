@@ -7,7 +7,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalsContainer = document.querySelector('#modals');
 
-const Modal = ({ title, onCloseButtonClick, onEscKeydown, children }) => {
+function Modal({ title, onCloseButtonClick, onEscKeydown, children }) {
   useEffect(() => {
     document.addEventListener('keydown', onEscKeydown);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './order-details.module.css';
 
-const OrderDetails = () => {
+function OrderDetails() {
   return (
     <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
       <p className='text text_type_digits-large mb-8'>034536</p>

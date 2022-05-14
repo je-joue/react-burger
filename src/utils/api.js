@@ -7,7 +7,7 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`)
 }
 
-export const getIngredients = () => {
+export const fetchIngredients = () => {
   return fetch(`${apiConfig.baseURL}ingredients`, {
     headers: apiConfig.headers
   })

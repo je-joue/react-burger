@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import { ingredientPropType } from '../../utils/propTypes';
 
-const IngredientDetails = ({ currentIngredient}) => {
+function IngredientDetails({ currentIngredient }) {
   console.log(currentIngredient);
   return (
     <div className={`${styles['ingredient-details-container']} pr-15 pb-15 pl-15`}>

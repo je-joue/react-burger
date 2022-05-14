@@ -6,7 +6,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { getIngredients } from '../../utils/api';
+import { fetchIngredients } from '../../utils/api';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -15,7 +15,7 @@ function App() {
   const [currentIngredient, setCurrentIngredient] = React.useState([]);
 
   useEffect(() => {
-    getIngredients()
+    fetchIngredients()
     .then(res => setIngredients(res.data))
     .catch(err => console.log(err));
   }, []);
