@@ -1,0 +1,24 @@
+.app {
+  max-height: 100vh;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main {
+  width: 100%;
+  max-width: 1280px;
+  box-sizing: border-box;
+  
+}
+
+.main-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 40px;
+}
+
+
+
+
