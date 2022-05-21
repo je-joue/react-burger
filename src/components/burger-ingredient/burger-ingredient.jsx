@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';

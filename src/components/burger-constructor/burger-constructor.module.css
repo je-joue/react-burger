@@ -1,7 +1,9 @@
 .constructor-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .constructor {
@@ -17,6 +19,8 @@
   padding: 0;
   list-style-type: none;
   max-height: 40vh;
+  width: 100%;
+  box-sizing: border-box;
   overflow-y: scroll;
   scrollbar-color: #8585ad #2f2f37;
   scrollbar-width: thin;
@@ -37,6 +41,7 @@
   grid-template-columns: 24px 1fr;
   column-gap: 8px;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
 }
 
