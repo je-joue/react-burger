@@ -61,7 +61,6 @@ function BurgerConstructor({ onOrderButtonClick }) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
   onOrderButtonClick: PropTypes.func.isRequired
 };
 
