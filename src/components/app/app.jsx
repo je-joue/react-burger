@@ -17,8 +17,10 @@ function App() {
 
   const constructorInitialState = {
     bun: null,
-    fillings: [],
+    toppings: [],
     ids: [],
+    isOrderNumberLoading: false,
+    orderError: null,
     orderNumber: null
   };
 
@@ -30,18 +32,35 @@ function App() {
           bun: payload,
           ids: [...state.ids, payload._id]
         }
-
-      case 'setFillings':
+      case 'setToppings':
         return {
           ...state,
-          fillings: [...state.fillings, payload],
+          toppings: [...state.toppings, payload],
           ids: [...state.ids, payload._id]
         }
-
-      case 'getOrderNumber':
+      case 'setOrderNumber':
         return {
           ...state,
+          isOrderNumberLoading: false,
           orderNumber: payload
+        }
+      case 'setOrderNumberLoading':
+        return {
+          ...state,
+          isOrderNumberLoading: true
+        }
+      case 'setError':
+        return {
+          ...state,
+          isOrderNumberLoading: false,
+          orderError: payload
+        }
+      case 'resetOrder':
+        return {
+          ...state,
+          isOrderNumberLoading: false,
+          orderError: null,
+          orderNumber: null
         }
     }
   };
@@ -55,7 +74,7 @@ function App() {
   }, []);
 
   const addIngredientOnClick = (ingredient) => {
-    ingredient.type === 'bun' ? constructorDispatcher({ type: 'setBun', payload: ingredient }) : constructorDispatcher({ type: 'setFillings', payload: ingredient });
+    ingredient.type === 'bun' ? constructorDispatcher({ type: 'setBun', payload: ingredient }) : constructorDispatcher({ type: 'setToppings', payload: ingredient });
   }
 
   const handleIngredientClick = (ingredient) => {
@@ -66,18 +85,16 @@ function App() {
 
   const handleOrderButtonClick = () => {
     putOrder(constructorState.ids)
-    .then(res => constructorDispatcher({ type: 'getOrderNumber', payload: res.order.number }))
     .then(setOrderDetailsOpened(true))
-    .catch(err => console.log(err));
+    .then(constructorDispatcher({ type: 'setOrderNumberLoading' }))
+    .then(res => constructorDispatcher({ type: 'setOrderNumber', payload: res.order.number }))
+    .catch(err => constructorDispatcher({ type: 'setError', payload: 'Что-то пошло не так...' }));
   }
 
   const closeAllModals = () => {
     setOrderDetailsOpened(false);
     setIngredientInfoOpened(false);
-  };
-
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
+    constructorDispatcher({ type: 'resetOrder' })
   };
 
   return (
@@ -93,10 +110,7 @@ function App() {
         </main>
 
         {isOrderDetailsOpened &&
-          <Modal
-            onCloseButtonClick={closeAllModals}
-            onEscKeydown={handleEscKeydown}
-          >
+          <Modal closeModal={closeAllModals}>
             <OrderDetails />
           </Modal>
         }
@@ -104,8 +118,7 @@ function App() {
         {isIngredientInfoOpened &&
           <Modal
             title="Детали ингредиента"
-            onCloseButtonClick={closeAllModals}
-            onEscKeydown={handleEscKeydown}
+            closeModal={closeAllModals}
           >
             <IngredientDetails currentIngredient={currentIngredient} />
           </Modal>

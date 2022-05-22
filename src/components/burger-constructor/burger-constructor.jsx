@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,9 +6,14 @@ import { ingredientPropType } from '../../utils/propTypes';
 import { BurgerConstructorContext } from '../../services/burger-constructor-context';
 
 function BurgerConstructor({ onOrderButtonClick }) {
-  const { constructorState, constructorDispatcher } = useContext(BurgerConstructorContext);
-  const bunsPrice = constructorState.bun ? constructorState.bun.price * 2 : 0;
-  const totalPrice = constructorState.fillings ? constructorState.fillings.reduce((acc, current) => acc + current.price, bunsPrice) : bunsPrice;
+  const { constructorState } = useContext(BurgerConstructorContext);
+  const totalPrice = useMemo(
+    () => {
+      const bunsPrice = constructorState.bun ? constructorState.bun.price * 2 : 0;
+      return constructorState.toppings ? constructorState.toppings.reduce((acc, current) => acc + current.price, bunsPrice) : bunsPrice;
+    }, [constructorState.bun, constructorState.toppings]
+  )
+
 
   return (
     <section className={`${styles['constructor-container']} pl-4`}>
@@ -24,7 +29,7 @@ function BurgerConstructor({ onOrderButtonClick }) {
         </div>}
 
         <ul className={styles.list}>
-          {constructorState.fillings && constructorState.fillings.map((ingredient) => (
+          {constructorState.toppings && constructorState.toppings.map((ingredient) => (
             <li className={`${styles['element-wrapper']} mr-2 mb-4`} key={ingredient._id}>
               <DragIcon type="primary" />
               <ConstructorElement

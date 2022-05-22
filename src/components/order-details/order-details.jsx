@@ -4,6 +4,21 @@ import { BurgerConstructorContext } from '../../services/burger-constructor-cont
 
 function OrderDetails() {
   const { constructorState, constructorDispatcher } = useContext(BurgerConstructorContext);
+  if (constructorState.orderError) {
+    return (
+      <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
+        <div className='text text_type_main-medium'>{constructorState.orderError}</div>
+      </div>
+    )
+  }
+  if (constructorState.isOrderNumberLoading) {
+    return (
+      <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
+        <div className={styles.preloader}></div> :
+      </div>
+    )
+  }
+
   return (
     <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
       <p className='text text_type_digits-large mb-8'>{constructorState.orderNumber}</p>

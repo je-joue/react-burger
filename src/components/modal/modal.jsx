@@ -7,12 +7,16 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalsContainer = document.querySelector('#modals');
 
-function Modal({ title, onCloseButtonClick, onEscKeydown, children }) {
+function Modal({ title, closeModal, children }) {
+  const handleEscKeydown = (event) => {
+    event.key === "Escape" && closeModal();
+  };
+
   useEffect(() => {
-    document.addEventListener('keydown', onEscKeydown);
+    document.addEventListener('keydown', handleEscKeydown);
 
     return () => {
-      document.removeEventListener('keydown', onEscKeydown);
+      document.removeEventListener('keydown', handleEscKeydown);
     };
   }, []);
 
@@ -22,12 +26,12 @@ function Modal({ title, onCloseButtonClick, onEscKeydown, children }) {
         <div className={`${styles['title-wrap']} pt-10 pr-10 pl-10`}>
           <h3 className={`${styles.title} text text_type_main-large`}>{title}</h3>
           <button className={styles['close-button']}>
-            <CloseIcon type="primary" onClick={onCloseButtonClick} />
+            <CloseIcon type="primary" onClick={closeModal} />
           </button>
         </div>
         {children}
       </div>
-      <ModalOverlay onClick={onCloseButtonClick} />
+      <ModalOverlay onClick={closeModal} />
     </>,
     modalsContainer
   );
@@ -37,7 +41,6 @@ export default Modal;
 
 Modal.propTypes = {
   title: PropTypes.string,
-  onCloseButtonClick: PropTypes.func.isRequired,
-  onEscKeydown: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 }

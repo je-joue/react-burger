@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -35,7 +35,7 @@ function BurgerIngredients({ ingredients, onCardClick }) {
     if (e === "main") onTabClickScroll(mainTitleRef.current);
   }
 
-  const ingredientCategories = React.useMemo(
+  const ingredientCategories = useMemo(
     () =>
     [
       {
