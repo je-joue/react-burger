@@ -80,11 +80,14 @@ function App() {
     ingredient.type === 'bun' ? constructorDispatcher({ type: 'setBun', payload: ingredient }) : constructorDispatcher({ type: 'setToppings', payload: ingredient });
   }
 
-  const handleIngredientClick = (ingredient) => {
-    setIngredientInfoOpened(true);
-    setCurrentIngredient(ingredient);
-    addIngredientOnClick(ingredient);
-  }
+  const handleIngredientClick = React.useCallback(
+    (ingredient) => {
+      setIngredientInfoOpened(true);
+      setCurrentIngredient(ingredient);
+      addIngredientOnClick(ingredient);
+    },
+    []
+  );
 
   const handleOrderButtonClick = () => {
     sendOrder(constructorState.ids)

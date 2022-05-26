@@ -19,7 +19,7 @@ function BurgerIngredient({ ingredient, onCardClick }) {
   );
 }
 
-export default BurgerIngredient;
+export default React.memo(BurgerIngredient);
 
 BurgerIngredient.propTypes = {
   ingredient: ingredientPropType.isRequired,

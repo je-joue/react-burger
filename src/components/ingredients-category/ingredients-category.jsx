@@ -17,7 +17,7 @@ const IngredientsCategory = React.forwardRef(({ title, ingredients, onCardClick 
   );
 });
 
-export default IngredientsCategory;
+export default React.memo(IngredientsCategory);
 
 IngredientsCategory.propTypes = {
   title: PropTypes.string.isRequired,
