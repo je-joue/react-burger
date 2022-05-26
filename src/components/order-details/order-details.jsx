@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import styles from './order-details.module.css';
 import { BurgerConstructorContext } from '../../services/burger-constructor-context';
+import Preloader from '../preloader/preloader';
 
 function OrderDetails() {
   const { constructorState, constructorDispatcher } = useContext(BurgerConstructorContext);
   if (constructorState.orderError) {
     return (
       <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
-        <div className='text text_type_main-medium'>{constructorState.orderError}</div>
+        <p className='text text_type_main-medium'>{constructorState.orderError}</p>
       </div>
     )
   }
   if (constructorState.isOrderNumberLoading) {
     return (
       <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
-        <div className={styles.preloader}></div> :
+        <Preloader />
       </div>
     )
   }

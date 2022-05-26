@@ -14,7 +14,7 @@ export const fetchIngredients = () => {
   .then(res => checkResponse(res))
 }
 
-export function putOrder(data) {
+export function sendOrder(data) {
   return fetch(`${apiConfig.baseURL}orders`, {
     method: 'POST',
     headers: apiConfig.headers,
