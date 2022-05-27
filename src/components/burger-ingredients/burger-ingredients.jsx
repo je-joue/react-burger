@@ -13,15 +13,27 @@ function BurgerIngredients({ ingredients, onCardClick }) {
   const saucesTitleRef = useRef(null);
   const mainTitleRef = useRef(null);
 
-  const handleScroll = () => {
-    const currentScroll = categoriesListRef.current.scrollTop + categoriesListRef.current.offsetTop;
-    const bunsTitlePos = bunsTitleRef.current.offsetTop;
-    const saucesTitlePos = saucesTitleRef.current.offsetTop;
-    const mainTitlePos = mainTitleRef.current.offsetTop;
+  // const handleScroll = () => {
+  //   const currentScroll = categoriesListRef.current.scrollTop  + categoriesListRef.current.offsetTop;
+  //   const bunsTitlePos = bunsTitleRef.current.offsetTop;
+  //   const saucesTitlePos = saucesTitleRef.current.offsetTop;
+  //   const mainTitlePos = mainTitleRef.current.offsetTop;
 
-    if (currentScroll >= bunsTitlePos && currentScroll < saucesTitlePos) setCurrentTab('bun');
-    if (currentScroll >= saucesTitlePos && currentScroll < mainTitlePos) setCurrentTab('sauce');
-    if (currentScroll >= mainTitlePos) setCurrentTab('main');
+  //   if (currentScroll >= bunsTitlePos && currentScroll < saucesTitlePos) setCurrentTab('bun');
+  //   if (currentScroll >= saucesTitlePos && currentScroll < mainTitlePos) setCurrentTab('sauce');
+  //   if (currentScroll >= mainTitlePos) setCurrentTab('main');
+  // }
+
+  const handleScroll = () => {
+    const categoriesListPos = categoriesListRef.current.offsetTop;
+    const currentScroll = categoriesListRef.current.scrollTop;
+    const bunsTitlePos = Math.abs(bunsTitleRef.current.offsetTop - currentScroll - categoriesListPos);
+    const saucesTitlePos = Math.abs(saucesTitleRef.current.offsetTop - currentScroll - categoriesListPos);
+    const mainTitlePos = Math.abs(mainTitleRef.current.offsetTop - currentScroll - categoriesListPos);
+
+    if (bunsTitlePos < saucesTitlePos) setCurrentTab('bun');
+    if (saucesTitlePos < bunsTitlePos) setCurrentTab('sauce');
+    if (mainTitlePos < saucesTitlePos) setCurrentTab('main');
   }
 
   function onTabClickScroll(el) {
