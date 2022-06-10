@@ -7,20 +7,31 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`)
 }
 
-export const fetchIngredients = () => {
-  return fetch(`${apiConfig.baseURL}ingredients`, {
+export const fetchIngredients = async () => {
+  const res = await fetch(`${apiConfig.baseURL}ingredients`, {
     headers: apiConfig.headers
-  })
-  .then(res => checkResponse(res))
+  });
+  return checkResponse(res);
 }
 
-export function sendOrder(data) {
-  return fetch(`${apiConfig.baseURL}orders`, {
+export async function postOrder(data) {
+  const res = await fetch(`${apiConfig.baseURL}orders`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify({
       "ingredients": data
     })
-  })
-  .then(checkResponse)
+  });
+  return checkResponse(res);
 }
+
+// export function sendOrder(data) {
+//   return fetch(`${apiConfig.baseURL}orders`, {
+//     method: 'POST',
+//     headers: apiConfig.headers,
+//     body: JSON.stringify({
+//       "ingredients": data
+//     })
+//   })
+//   .then(checkResponse)
+// }
