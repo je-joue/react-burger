@@ -47,15 +47,16 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ],
-    "exports": {
-      ".": {
-        "react-server": "./react.shared-subset.js",
-        "default": "./index.js"
-      },
-      "./package.json": "./package.json",
-      "./jsx-runtime.js": "./jsx-runtime.js",
-      "./jsx-dev-runtime": "./jsx-dev-runtime.js"
-    }
+    ]
+  },
+  "exports": {
+    ".": {
+      "react-server": "./react.shared-subset.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./jsx-runtime.js": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-dev-runtime.js"
   }
+
 }
