@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './order-details.module.css';
 import Preloader from '../preloader/preloader';
 
 function OrderDetails() {
   const { order, orderRequest, orderFailed, isOrderEmpty } = useSelector(store => store.orderDetails);
-  // if (orderFailed) {
-  //   return (
-  //     <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
-  //       <p className='text text_type_main-medium'>ОШИБКА</p>
-  //     </div>
-  //   )
-  // }
+  if (orderFailed) {
+    return (
+      <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>
+        <p className='text text_type_main-medium'>ОШИБКА</p>
+      </div>
+    )
+  }
   if (orderRequest) {
     return (
       <div className={`${styles['order-details-container']} pt-4 pr-25 pb-30 pl-25`}>

@@ -3,6 +3,7 @@ export const ADD_BUN = 'ADD_BUN';
 export const ADD_TOPPING = 'ADD_TOPPING';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const RESET_CONSTRUCTOR = 'RESET_CONSTRUCTOR';
+export const REORDER_INGREDIENTS = 'REORDER_INGREDIENTS';
 
 export const addBun = (ingredient) => {
   return {
@@ -31,13 +32,17 @@ export const resetConstructor = () => {
   }
 }
 
-
-
-export const addIngredientOnClick = (ingredient) => {
+export const addIngredient = (ingredient) => {
   return function(dispatch) {
     const key = nanoid();
     ingredient.type === 'bun' ? dispatch(addBun(ingredient)) : dispatch(addTopping({...ingredient, key: key}));
   }
 }
 
-
+export const reorderIngredients = (dragIndex, hoverIndex) => {
+  return {
+    type: REORDER_INGREDIENTS,
+    dragIndex: dragIndex,
+    hoverIndex: hoverIndex
+  }
+}

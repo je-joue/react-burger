@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
@@ -8,6 +9,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const modalsContainer = document.querySelector('#modals');
 
 function Modal({ title, closeModal, children }) {
+  const { order } = useSelector(store => store.orderDetails);
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeModal();
   };
@@ -18,7 +20,7 @@ function Modal({ title, closeModal, children }) {
     return () => {
       document.removeEventListener('keydown', handleEscKeydown);
     };
-  }, []);
+  }, [order]);
 
   return createPortal(
     <>

@@ -1,9 +1,12 @@
 import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, CurrencyIcon, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { deleteIngredient } from '../../services/actions/burger-constructor-actions';
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import BurgerConstructorTopping from '../burger-constructor-filling/burger-constructor-topping';
 import { sendOrder } from '../../services/actions/order-details-action';
+import { addIngredient } from '../../services/actions/burger-constructor-actions';
+import { increaseCount } from '../../services/actions/burger-data-actions';
 
 function BurgerConstructor() {
   const { bun, toppings } = useSelector(store => store.burgerConstructor);
@@ -17,55 +20,61 @@ function BurgerConstructor() {
   )
 
   const handleOrderButtonClick = () => {
-    const bunId = bun ? [bun._id] : [];
-    const toppingsIds = toppings.length ? toppings.map(i => i._id) : [];
-    const ids = [...bunId, ...toppingsIds];
-    // const ids = bun && toppings.length ? [bun._id, ...toppings.map(i => i._id)] : [];
+    // const bunId = bun ? [bun._id] : [];
+    // const toppingsIds = toppings.length ? toppings.map(i => i._id) : [];
+    // const ids = [...bunId, ...toppingsIds];
+    const ids = bun && toppings.length ? [bun._id, ...toppings.map(i => i._id)] : [];
     dispatch(sendOrder(ids));
   }
 
-  const handleDeleteIngredientClick = (key) => {
-    dispatch(deleteIngredient(key));
-  }
+  const [{isHover}, dropTargetRef] = useDrop({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient));
+      dispatch(increaseCount(ingredient._id, ingredient.type));
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
 
   return (
-    <section className={`${styles['constructor-container']} pl-4`}>
-      <div className={`${styles.constructor} mb-10`}>
-        {bun && <div className='mr-4 mb-4 ml-8'>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={bun.name}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>}
+    <section className={`${styles['constructor-container']} pl-4 ${isHover ? styles['on-hover'] : ''}`} ref={dropTargetRef}>
+      {(bun || toppings.length) ? (
+        <div className={`${styles.constructor} mb-10`}>
+          {bun && <div className='mr-4 mb-4 ml-8'>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>}
 
-        <ul className={styles.list}>
-          {toppings && toppings.map((ingredient) => (
-            <li className={`${styles['element-wrapper']} mr-2 mb-4`} key={ingredient.key}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-                handleClose={() => handleDeleteIngredientClick(ingredient.key)}
-              />
-            </li>
-          ))}
-        </ul>
+          <ul className={styles.list}>
+            {toppings && toppings.map((ingredient, index) => (
+              <BurgerConstructorTopping ingredient={ingredient} key={ingredient.key} index={index} />
+            ))}
+          </ul>
 
-        {bun && <div className='mt-4 mr-4 ml-8'>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={bun.name}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>}
+          {bun && <div className='mt-4 mr-4 ml-8'>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>}
+        </div>
+        ) : (
+        <div className={`${styles['instruction-container']} mb-10`}>
+          <p className={`text text_type_main-medium mb-6`}>Перетащите ингредиенты из списка слева</p>
+        </div>
+        )
+      }
 
-      </div>
       <div className={`${styles.order} mr-4`}>
         <div className={`${styles['price-total']} mr-10`}>
           <span className='text text_type_digits-medium mr-2'>{totalPrice}</span>

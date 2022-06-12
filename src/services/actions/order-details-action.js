@@ -51,13 +51,3 @@ export const sendOrder = (ids) => {
     })
   }
 }
-
-
-
-  // const handleOrderButtonClick = () => {
-  //   sendOrder(constructorState.ids)
-  //   .then(setOrderDetailsOpened(true))
-  //   .then(constructorDispatcher({ type: 'setOrderNumberLoading' }))
-  //   .then(res => constructorDispatcher({ type: 'setOrderNumber', payload: res.order.number }))
-  //   .catch(err => constructorDispatcher({ type: 'setError', payload: 'Что-то пошло не так...' }));
-  // }

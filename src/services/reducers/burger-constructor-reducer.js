@@ -1,4 +1,5 @@
-import { ADD_BUN, ADD_TOPPING, DELETE_INGREDIENT, RESET_CONSTRUCTOR } from "../actions/burger-constructor-actions";
+import { ADD_BUN, ADD_TOPPING, DELETE_INGREDIENT, RESET_CONSTRUCTOR, REORDER_INGREDIENTS } from "../actions/burger-constructor-actions";
+import update from 'immutability-helper';
 
 const initialState = {
   bun: null,
@@ -31,6 +32,17 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         bun: null,
         toppings: [],
         ids: []
+      }
+    }
+    case REORDER_INGREDIENTS: {
+      return {
+        ...state,
+        toppings: update(state.toppings, {
+          $splice: [
+            [action.dragIndex, 1],
+            [action.hoverIndex, 0, state.toppings[action.dragIndex]],
+          ],
+        })
       }
     }
     default: {

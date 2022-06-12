@@ -45,9 +45,16 @@ export const getIngredients = () => {
   }
 }
 
-export const increaseCount = (id) => {
+export const increaseCount = (id, type) => {
   return {
     type: INCREASE_COUNT,
+    payload: {id, type}
+  }
+}
+
+export const decreaseCount = (id) => {
+  return {
+    type: DECREASE_COUNT,
     payload: id
   }
 }

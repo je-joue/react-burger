@@ -3,16 +3,16 @@ import { useDispatch } from 'react-redux';
 import styles from './ingredient-details.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/propTypes';
-import { addIngredientOnClick } from '../../services/actions/burger-constructor-actions';
+import { addIngredient } from '../../services/actions/burger-constructor-actions';
 import { increaseCount } from '../../services/actions/burger-data-actions';
 
-function IngredientDetails({ currentIngredient, addIngredient }) {
+function IngredientDetails({ currentIngredient }) {
   const dispatch = useDispatch();
 
   const handleAddIngredientClick = useCallback(
     () => {
-      dispatch(addIngredientOnClick(currentIngredient));
-      dispatch(increaseCount(currentIngredient._id));
+      dispatch(addIngredient(currentIngredient));
+      dispatch(increaseCount(currentIngredient._id, currentIngredient.type));
     },
     [dispatch]
   );
@@ -39,7 +39,9 @@ function IngredientDetails({ currentIngredient, addIngredient }) {
           <span className='text text_type_digits-medium text_color_inactive'>{currentIngredient.carbohydrates}</span>
         </li>
       </ul>
-      <Button type="primary" size="large" onClick={handleAddIngredientClick}>Добавить в заказ</Button>
+      <div className='mt-8'>
+        <Button type="primary" size="large" onClick={handleAddIngredientClick}>Добавить в заказ</Button>
+      </div>
     </div>
   );
 };

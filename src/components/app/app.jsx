@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
@@ -17,7 +19,7 @@ import { resetCount } from '../../services/actions/burger-data-actions';
 function App() {
   const { ingredients, ingredientsRequest } = useSelector(store => store.burgerData);
   const { currentIngredient, isIngredientDetailsOpen } = useSelector(store => store.ingredientDetails);
-  const { isOrderDetailsOpen } = useSelector(store => store.orderDetails);
+  const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
 
   useEffect(
@@ -33,8 +35,10 @@ function App() {
 
   const closeOrderDetailsModal = () => {
     dispatch(closeOrderDetails());
-    dispatch(resetConstructor());
-    dispatch(resetCount());
+    if (order) {
+      dispatch(resetConstructor());
+      dispatch(resetCount());
+    }
   };
 
   return (
@@ -43,6 +47,7 @@ function App() {
       {ingredientsRequest ? (
         <Preloader />
       ) : (
+        <DndProvider backend={HTML5Backend}>
           <main className={`${styles.main} pl-5 pr-5`}>
             <h1 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h1>
             <div className={styles['main-columns']}>
@@ -50,6 +55,7 @@ function App() {
               <BurgerConstructor />
             </div>
           </main>
+        </DndProvider>
       )}
 
           {isOrderDetailsOpen &&

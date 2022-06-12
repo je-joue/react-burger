@@ -32,7 +32,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
         order: null,
         orderRequest: false,
         orderFailed: true,
-        isOrderDetailsOpen: false
+        // isOrderDetailsOpen: false
       }
     }
     case IS_ORDER_EMPTY: {
@@ -46,6 +46,8 @@ export const orderDetailsReducer = (state = initialState, action) => {
       return {
         ...state,
         order: null,
+        orderRequest: false,
+        orderFailed: false,
         isOrderDetailsOpen: false,
         isOrderEmpty: true
       }

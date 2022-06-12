@@ -1,12 +1,10 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import { ingredientPropType } from '../../utils/propTypes';
 
-function BurgerIngredients({ onCardClick }) {
+function BurgerIngredients() {
   const ingredients = useSelector(store => store.burgerData.ingredients);
 
   const [currentTab, setCurrentTab] = React.useState('bun');
@@ -93,7 +91,7 @@ function BurgerIngredients({ onCardClick }) {
 
       <ul className={`${styles['categories-list']}`} ref={categoriesListRef} onScroll={handleScroll}>
         {ingredientCategories.map((category) => (
-          <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} ref={category.ref} onCardClick={onCardClick} />
+          <IngredientsCategory title={category.title} ingredients={category.ingredients} key={category.id} ref={category.ref} />
         ))}
       </ul>
 
@@ -102,8 +100,4 @@ function BurgerIngredients({ onCardClick }) {
 }
 
 export default BurgerIngredients;
-
-// BurgerIngredients.propTypes = {
-//   onCardClick: PropTypes.func.isRequired
-// };
 

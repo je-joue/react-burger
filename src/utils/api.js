@@ -24,14 +24,3 @@ export async function postOrder(data) {
   });
   return checkResponse(res);
 }
-
-// export function sendOrder(data) {
-//   return fetch(`${apiConfig.baseURL}orders`, {
-//     method: 'POST',
-//     headers: apiConfig.headers,
-//     body: JSON.stringify({
-//       "ingredients": data
-//     })
-//   })
-//   .then(checkResponse)
-// }
