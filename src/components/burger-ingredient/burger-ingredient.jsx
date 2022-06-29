@@ -6,7 +6,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { ingredientPropType } from '../../utils/propTypes';
 import { setIngredientDetails } from '../../services/actions/ingredient-details-actions';
 
-function BurgerIngredient({ ingredient }) {
+function BurgerIngredient({ ingredient, counter }) {
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -27,7 +27,7 @@ function BurgerIngredient({ ingredient }) {
         <CurrencyIcon type='primary' />
       </div>
       <p className={`${styles['ingredient-title']} text text_type_main-default`}>{ingredient.name}</p>
-      <Counter className={styles['ingredient-counter']} count={ingredient.count} size="default" />
+      <Counter className={styles['ingredient-counter']} count={counter} size="default" />
     </li>
   );
 }

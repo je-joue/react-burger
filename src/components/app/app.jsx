@@ -14,11 +14,10 @@ import { getIngredients } from '../../services/actions/burger-data-actions';
 import { closeIngredientDetails } from '../../services/actions/ingredient-details-actions';
 import { resetConstructor } from '../../services/actions/burger-constructor-actions';
 import { closeOrderDetails } from '../../services/actions/order-details-action';
-import { resetCount } from '../../services/actions/burger-data-actions';
 
 function App() {
   const { ingredients, ingredientsRequest } = useSelector(store => store.burgerData);
-  const { currentIngredient, isIngredientDetailsOpen } = useSelector(store => store.ingredientDetails);
+  const { currentIngredient } = useSelector(store => store.ingredientDetails);
   const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
 
@@ -37,7 +36,6 @@ function App() {
     dispatch(closeOrderDetails());
     if (order) {
       dispatch(resetConstructor());
-      dispatch(resetCount());
     }
   };
 
@@ -64,7 +62,7 @@ function App() {
             </Modal>
           }
 
-          {isIngredientDetailsOpen &&
+          {currentIngredient &&
             <Modal
               title="Детали ингредиента"
               closeModal={closeIngredientDetailsModal}

@@ -1,4 +1,4 @@
-import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, IS_ORDER_EMPTY, CLOSE_ORDER_DETAILS } from "../actions/order-details-action";
+import { SEND_ORDER_REQUEST, SEND_ORDER_SUCCESS, SEND_ORDER_FAILED, SET_ORDER_EMPTY, CLOSE_ORDER_DETAILS } from "../actions/order-details-action";
 
 const initialState = {
   order: null,
@@ -35,7 +35,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
         // isOrderDetailsOpen: false
       }
     }
-    case IS_ORDER_EMPTY: {
+    case SET_ORDER_EMPTY: {
       return {
         ...state,
         isOrderDetailsOpen: true,

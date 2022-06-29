@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerConstructorTopping from '../burger-constructor-filling/burger-constructor-topping';
+import BurgerConstructorTopping from '../burger-constructor-topping/burger-constructor-topping';
 import { sendOrder } from '../../services/actions/order-details-action';
 import { addIngredient } from '../../services/actions/burger-constructor-actions';
-import { increaseCount } from '../../services/actions/burger-data-actions';
 
 function BurgerConstructor() {
   const { bun, toppings } = useSelector(store => store.burgerConstructor);
@@ -31,7 +30,6 @@ function BurgerConstructor() {
     accept: 'ingredient',
     drop(ingredient) {
       dispatch(addIngredient(ingredient));
-      dispatch(increaseCount(ingredient._id, ingredient.type));
     },
     collect: monitor => ({
       isHover: monitor.isOver(),

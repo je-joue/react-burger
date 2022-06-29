@@ -1,4 +1,4 @@
-import { ADD_BUN, ADD_TOPPING, DELETE_INGREDIENT, RESET_CONSTRUCTOR, REORDER_INGREDIENTS } from "../actions/burger-constructor-actions";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, RESET_CONSTRUCTOR, REORDER_INGREDIENTS } from "../actions/burger-constructor-actions";
 import update from 'immutability-helper';
 
 const initialState = {
@@ -8,17 +8,11 @@ const initialState = {
 
 export const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_BUN: {
-      return {
-        ...state,
-        bun: action.payload,
-      };
-    }
-    case ADD_TOPPING: {
-      return {
-        ...state,
-        toppings: [...state.toppings, action.payload],
-      };
+    case ADD_INGREDIENT: {
+      if (action.payload.type === 'bun') {
+        return {...state, bun: action.payload}
+      }
+      return {...state, toppings: [...state.toppings, action.payload]}
     }
     case DELETE_INGREDIENT: {
       return {
@@ -30,8 +24,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         bun: null,
-        toppings: [],
-        ids: []
+        toppings: []
       }
     }
     case REORDER_INGREDIENTS: {

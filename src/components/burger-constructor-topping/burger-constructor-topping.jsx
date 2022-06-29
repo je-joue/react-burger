@@ -6,7 +6,6 @@ import styles from './burger-constructor-topping.module.css';
 import { ingredientPropType } from '../../utils/propTypes';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteIngredient, reoderIngredients } from '../../services/actions/burger-constructor-actions';
-import { decreaseCount } from '../../services/actions/burger-data-actions';
 import { reorderIngredients } from '../../services/actions/burger-constructor-actions';
 
 function BurgerConstructorTopping({ ingredient, index }) {
@@ -14,7 +13,6 @@ function BurgerConstructorTopping({ ingredient, index }) {
 
   const handleDeleteIngredientClick = (key, id) => {
     dispatch(deleteIngredient(key));
-    dispatch(decreaseCount(id));
   }
 
   const ref = useRef(null);

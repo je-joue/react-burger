@@ -9,7 +9,6 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const modalsContainer = document.querySelector('#modals');
 
 function Modal({ title, closeModal, children }) {
-  const { order } = useSelector(store => store.orderDetails);
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeModal();
   };
@@ -20,7 +19,7 @@ function Modal({ title, closeModal, children }) {
     return () => {
       document.removeEventListener('keydown', handleEscKeydown);
     };
-  }, [order]);
+  }, [handleEscKeydown]);
 
   return createPortal(
     <>

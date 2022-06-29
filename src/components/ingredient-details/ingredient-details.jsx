@@ -4,7 +4,6 @@ import styles from './ingredient-details.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/propTypes';
 import { addIngredient } from '../../services/actions/burger-constructor-actions';
-import { increaseCount } from '../../services/actions/burger-data-actions';
 
 function IngredientDetails({ currentIngredient }) {
   const dispatch = useDispatch();
@@ -12,7 +11,6 @@ function IngredientDetails({ currentIngredient }) {
   const handleAddIngredientClick = useCallback(
     () => {
       dispatch(addIngredient(currentIngredient));
-      dispatch(increaseCount(currentIngredient._id, currentIngredient.type));
     },
     [dispatch]
   );
