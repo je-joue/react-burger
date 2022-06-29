@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -6,67 +9,68 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { fetchIngredients } from '../../utils/api';
+import Preloader from '../preloader/preloader';
+import { getIngredients } from '../../services/actions/burger-data-actions';
+import { closeIngredientDetails } from '../../services/actions/ingredient-details-actions';
+import { resetConstructor } from '../../services/actions/burger-constructor-actions';
+import { closeOrderDetails } from '../../services/actions/order-details-action';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [isIngredientInfoOpened, setIngredientInfoOpened] = React.useState(false);
-  const [currentIngredient, setCurrentIngredient] = React.useState([]);
+  const { ingredients, ingredientsRequest } = useSelector(store => store.burgerData);
+  const { currentIngredient } = useSelector(store => store.ingredientDetails);
+  const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetchIngredients()
-    .then(res => setIngredients(res.data))
-    .catch(err => console.log(err));
-  }, []);
+  useEffect(
+    () => {
+      dispatch(getIngredients());
+    },
+    [dispatch]
+  );
 
-  const handleOrderButtonClick = () => {
-    setIsOrderDetailsOpened(true);
-  }
-
-  const handleIngredientClick = (ingredient) => {
-    setIngredientInfoOpened(true);
-    setCurrentIngredient(ingredient);
-  }
-
-  const closeAllModals = () => {
-    setIsOrderDetailsOpened(false);
-    setIngredientInfoOpened(false);
+  const closeIngredientDetailsModal = () => {
+    dispatch(closeIngredientDetails());
   };
 
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
+  const closeOrderDetailsModal = () => {
+    dispatch(closeOrderDetails());
+    if (order) {
+      dispatch(resetConstructor());
+    }
   };
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <main className={`${styles.main} pl-5 pr-5`}>
-        <h1 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h1>
-        <div className={styles['main-columns']}>
-          <BurgerIngredients ingredients={ingredients} onCardClick={handleIngredientClick} />
-          <BurgerConstructor ingredients={ingredients} onOrderButtonClick={handleOrderButtonClick} />
-        </div>
-      </main>
+      {ingredientsRequest ? (
+        <Preloader />
+      ) : (
+        <DndProvider backend={HTML5Backend}>
+          <main className={`${styles.main} pl-5 pr-5`}>
+            <h1 className='text text_type_main-large mt-10 mb-5'>Соберите бургер</h1>
+            <div className={styles['main-columns']}>
+              <BurgerIngredients ingredients={ingredients} />
+              <BurgerConstructor />
+            </div>
+          </main>
+        </DndProvider>
+      )}
 
-      {isOrderDetailsOpened &&
-        <Modal
-          onCloseButtonClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
-        >
-          <OrderDetails />
-        </Modal>
-      }
+          {isOrderDetailsOpen &&
+            <Modal closeModal={closeOrderDetailsModal}>
+              <OrderDetails />
+            </Modal>
+          }
 
-      {isIngredientInfoOpened &&
-        <Modal
-          title="Детали ингредиента"
-          onCloseButtonClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
-        >
-          <IngredientDetails currentIngredient={currentIngredient} />
-        </Modal>
-      }
+          {currentIngredient &&
+            <Modal
+              title="Детали ингредиента"
+              closeModal={closeIngredientDetailsModal}
+            >
+              <IngredientDetails currentIngredient={currentIngredient} />
+            </Modal>
+          }
+
     </div>
   );
 }

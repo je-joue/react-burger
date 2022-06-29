@@ -1,4 +1,5 @@
 .app {
+  height: 100vh;
   max-height: 100vh;
   overflow-y: hidden;
   display: flex;
@@ -10,7 +11,7 @@
   width: 100%;
   max-width: 1280px;
   box-sizing: border-box;
-  
+
 }
 
 .main-columns {
