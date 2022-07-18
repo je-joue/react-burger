@@ -1,26 +1,30 @@
 import styles from './app-header.module.css';
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
+  const {pathname} = useLocation();
   return (
     <header className={styles.header}>
       <nav className={styles.header__menu}>
         <div className={styles['header__menu-wrapper']}>
-          <a className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5`} href="#">
-            <BurgerIcon />
-            <span className='text text_type_main-default ml-2'>Конструктор</span>
-          </a>
-          <a className={`${styles['header__menu-item']} mt-4 mr-5 mb-4 ml-5`} href="#">
-            <ListIcon type="secondary"/>
-            <span className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</span>
-          </a>
+          <NavLink className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5 text text_type_main-default`} activeClassName={`${styles['header__menu-item_active']}`} to='/' exact={true}>
+            <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
+            <span className='ml-2'>Конструктор</span>
+          </NavLink>
+
+
+          <NavLink className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5 text text_type_main-default`} activeClassName={`${styles['header__menu-item_active']}`} to='/orders-history'>
+            <ListIcon type={pathname === '/orders-history' ? 'primary' : 'secondary'} />
+            <span className='ml-2'>Лента заказов</span>
+          </NavLink>
         </div>
-        <a className={styles['header__menu-item']} href="#"><Logo /></a>
-        <a className={`${styles['header__menu-item']} mt-4 mr-5 mb-4 ml-5`} href="#">
-          <ProfileIcon type="secondary" />
-          <span className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</span>
-        </a>
-      </nav> 
+        <Link className={styles['header__menu-item']} to='/'><Logo /></Link>
+        <NavLink className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5 text text_type_main-default`} activeClassName={`${styles['header__menu-item_active']}`} to='/profile'>
+          <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
+          <span className='ml-2'>Личный кабинет</span>
+        </NavLink>
+      </nav>
     </header>
   );
 }
