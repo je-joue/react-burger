@@ -5,12 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { MainPage, LoginPage, RegistrationPage, NotFoundPage } from '../../pages';
+import { MainPage, LoginPage, RegistrationPage, ProfilePage, NotFoundPage } from '../../pages';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import ProtectedRoute from '../protected-route/protected-route';
 import Preloader from '../preloader/preloader';
 import { getIngredients } from '../../services/actions/burger-data-actions';
 import { closeIngredientDetails } from '../../services/actions/ingredient-details-actions';
@@ -63,6 +64,9 @@ function App() {
           <Route path='/register' exact={true}>
             <RegistrationPage/>
           </Route>
+          <ProtectedRoute path='/profile' exact={true}>
+            <ProfilePage />
+          </ProtectedRoute>
           <Route>
             <NotFoundPage/>
           </Route>

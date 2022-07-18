@@ -38,10 +38,10 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 // export const LOGOUT_SUCCESSED = "LOGOUT_SUCCESSED";
 // export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
-// export const CHECK_TOKEN_REQUEST = "CHECK_TOKEN_REQUEST";
-// export const CHECK_TOKEN_SUCCESSED = "CHECK_TOKEN_SUCCESSED";
-// export const CHECK_TOKEN_UNSUCCESSED = "CHECK_TOKEN_UNSUCCESSED";
-// export const CHECK_TOKEN_FAILED = "CHECK_TOKEN_FAILED";
+export const CHECK_TOKEN_REQUEST = "CHECK_TOKEN_REQUEST";
+export const CHECK_TOKEN_SUCCESS = "CHECK_TOKEN_SUCCESS";
+export const CHECK_TOKEN_NOT_SUCCESS = "CHECK_TOKEN_NOT_SUCCESS";
+export const CHECK_TOKEN_FAILED = "CHECK_TOKEN_FAILED";
 
 // export const SEND_UPDATE_REQUEST = "SEND_UPDATE_REQUEST";
 // export const UPDATE_SUCCESSED = "UPDATE_SUCCESSED";
@@ -74,35 +74,6 @@ export const registerFailed =() => ({
 })
 
 
-
-
-// export function sendRegistrationRequest(user) {
-//   return function (dispatch) {
-//     dispatch({
-//       type: SEND_REGISTRTION_REQUEST,
-//     });
-
-//     api.createUserAccount(user)
-//       .then((res) => {
-//         if (res.success) {
-//           dispatch({
-//             type: REGISTRTION_SUCCESSED,
-//             payload: res.user,
-//           });
-
-//           setCookie("token", res.accessToken.split("Bearer ")[1]);
-//           localStorage.setItem("refreshToken", res.refreshToken);
-//         }
-//       })
-//       .catch((err) => {
-//         dispatch({
-//           type: REGISTRTION_FAILED,
-//         });
-//         logErrorToConsole(err);
-//       });
-//   };
-// }
-
 export function loginUser(user) {
   return function (dispatch) {
     dispatch(loginRequest());
@@ -125,9 +96,9 @@ export function registerUser(user) {
     register(user)
       .then((res) => {
         if (res.success) {
-        dispatch(registerSuccess(res.user));
-        setCookie('token', res.accessToken.split('Bearer ')[1]);
-        localStorage.setItem('refreshToken', res.refreshToken);
+          setCookie('token', res.accessToken.split('Bearer ')[1]);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          dispatch(registerSuccess(res.user));
         }
       })
       .catch((err) => {
