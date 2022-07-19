@@ -37,7 +37,6 @@ export async function login(data) {
 }
 
 export async function register(data) {
-  // console.log(JSON.stringify(data));
   const res = await fetch(`${apiConfig.baseURL}/${apiConfig.endpoints.register}`, {
     method: 'POST',
     referrerPolicy: 'no-referrer',
@@ -56,6 +55,23 @@ export async function logout(data) {
   return checkResponse(res);
 }
 
+export async function resetPassword(data) {
+  const res = await fetch(`${apiConfig.baseURL}/${apiConfig.endpoints.passwordForgot}`, {
+    method: "POST",
+    headers: apiConfig.headers,
+    body: JSON.stringify(data),
+  });
+  return checkResponse(res);
+}
+
+export async function changePassword(data) {
+  const res = await fetch(`${apiConfig.baseURL}/${apiConfig.endpoints.passwordReset}`, {
+    method: "POST",
+    headers: apiConfig.headers,
+    body: JSON.stringify(data),
+  });
+  return checkResponse(res);
+}
 
 
 

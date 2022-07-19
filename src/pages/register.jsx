@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { registerUser } from "../services/actions/auth-actions";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./forms.module.css";
 
 const RegistrationPage = () => {
+  const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
   const [userData, setUserData] = useState({
@@ -23,6 +25,16 @@ const RegistrationPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  if (user) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    )
   };
 
   return (

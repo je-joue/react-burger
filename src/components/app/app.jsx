@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { MainPage, LoginPage, RegistrationPage, ProfilePage, NotFoundPage } from '../../pages';
+import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage } from '../../pages';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
@@ -63,6 +63,15 @@ function App() {
           </Route>
           <Route path='/register' exact={true}>
             <RegistrationPage/>
+          </Route>
+          <Route path='/register' exact={true}>
+            <RegistrationPage/>
+          </Route>
+          <Route path='/forgot-password'>
+            <ForgotPasswordPage />
+          </Route>
+          <Route path='/reset-password'>
+            <ResetPasswordPage />
           </Route>
           <ProtectedRoute path='/profile' exact={true}>
             <ProfilePage />

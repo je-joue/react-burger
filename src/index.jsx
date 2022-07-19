@@ -11,7 +11,7 @@ import { store } from './services/store/store';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router basename='/react-burger'>
+      <Router>
         <App />
       </Router>
     </Provider>
