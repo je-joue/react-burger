@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Redirect, Link, useHistory, useLocation } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forms.module.css";
 import Preloader from "../components/preloader/preloader";
@@ -7,16 +8,15 @@ import { resetPassword } from "../utils/api";
 
 
 const ForgotPasswordPage = () => {
+  const { user } = useSelector(store => store.auth);
   const history = useHistory();
+  const location = useLocation();
 
   const [data, setData] = useState({
     email: ''
   });
 
-  const [state, setState] = useState({
-    isRequest: false,
-    isSuccess: false
-  });
+  const [isRequest, setRequest] = useState(false);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -25,31 +25,23 @@ const ForgotPasswordPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setState({...state, isRequest: true});
+    setRequest(true);
     resetPassword(data)
       .then((res) => {
-        setState({...state, isRequest: false, isSuccess: true});
+        setRequest(false);
+        history.replace({pathname: '/reset-password', state: { from: location }});
       })
       .catch((err) => {
+        setRequest(false);
         alert(err);
-      })
-      .finally(() => {
-        setState({...state, isRequest: false});
       })
   };
 
+
+
   return (
     <>
-      {state.isRequest && <Preloader />}
-
-      {state.isSuccess ? (
-        <Redirect
-          to={{
-            pathname: '/reset-password',
-            state: { from: history.location.pathname },
-          }}
-        />
-      ) : (
+      {isRequest && <Preloader />}
         <div className={styles.container}>
           <h1 className='mb-6 text text_type_main-medium'>
             Восстановление пароля
@@ -78,7 +70,6 @@ const ForgotPasswordPage = () => {
             </Link>
           </p>
         </div>
-      )}
     </>
   );
 };
