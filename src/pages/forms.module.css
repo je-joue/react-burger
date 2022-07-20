@@ -1,0 +1,35 @@
+.container {
+  width: 90%;
+  max-width: 480px;
+  margin: 180px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form > div,
+.form > div > div,
+.form > div > div > div {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+}
+
+.link:hover {
+  opacity: .7;
+}

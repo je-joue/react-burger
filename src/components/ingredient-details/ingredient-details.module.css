@@ -8,6 +8,7 @@
 
 .nutrition-values-list {
   width: 100%;
+  max-width: 520px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;

@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  max-width: 1240px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #4C4CFF;
+  border: none;
+  box-sizing: border-box;
+  padding: 16px 8px;
+  margin-right: 20px;
+}
+
+.cancel-button:hover {
+  cursor: pointer;
+}
