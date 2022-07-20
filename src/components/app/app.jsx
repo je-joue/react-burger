@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage } from '../../pages';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import ProtectedRoute from '../protected-route/protected-route';
-import Preloader from '../preloader/preloader';
 import { getIngredients } from '../../services/actions/burger-data-actions';
-import { closeIngredientDetails } from '../../services/actions/ingredient-details-actions';
+import { getUserInfo } from '../../services/actions/auth-actions';
 import { resetConstructor } from '../../services/actions/burger-constructor-actions';
 import { closeOrderDetails } from '../../services/actions/order-details-action';
 
 function App() {
-  const { ingredients, ingredientsRequest } = useSelector(store => store.burgerData);
-  const { currentIngredient } = useSelector(store => store.ingredientDetails);
   const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
 
@@ -35,9 +28,9 @@ function App() {
     [dispatch]
   );
 
-  // const closeIngredientDetailsModal = () => {
-  //   dispatch(closeIngredientDetails());
-  // };
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   const closeOrderDetailsModal = () => {
     dispatch(closeOrderDetails());

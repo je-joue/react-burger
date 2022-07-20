@@ -95,7 +95,6 @@ export function loginUser(user) {
           dispatch(loginSuccess(res.user));
           setCookie('token', res.accessToken.split('Bearer ')[1]);
           localStorage.setItem('refreshToken', res.refreshToken);
-          console.log(localStorage.getItem('refreshToken'));
         }
       })
       .catch((err) => {
