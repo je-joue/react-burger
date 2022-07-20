@@ -73,8 +73,30 @@ export async function changePassword(data) {
   return checkResponse(res);
 }
 
+export async function fetchWithRefresh(url, options) {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse(res);
+  } catch (err) {
+    if (err.message === 'jwt malformed') {
+      const refreshData = await updateToken();
+      options.headers.Authorization = refreshData.accessToken;
+      const res = await fetch(url, options);
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
+}
 
-
+async function updateToken() {
+  const res = await fetch(`${apiConfig.baseURL}/${apiConfig.endpoints.updateToken}`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({token: localStorage.getItem('refreshToken')})
+  });
+  return checkResponse(res);
+}
 
 
 

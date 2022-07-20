@@ -7,7 +7,9 @@ export const apiConfig = {
     register: 'auth/register',
     logout: 'auth/logout',
     passwordForgot: 'password-reset',
-    passwordReset: 'password-reset/reset'
+    passwordReset: 'password-reset/reset',
+    user: 'auth/user',
+    updateToken: 'auth/token'
   },
   headers: {
     'Content-Type': 'application/json'

@@ -5,16 +5,16 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  // SEND_LOGOUT_REQUEST,
-  // LOGOUT_SUCCESSED,
-  // LOGOUT_FAILED,
-  // CHECK_TOKEN_REQUEST,
-  // CHECK_TOKEN_SUCCESSED,
-  // CHECK_TOKEN_UNSUCCESSED,
-  // CHECK_TOKEN_FAILED,
-  // SEND_UPDATE_REQUEST,
-  // UPDATE_SUCCESSED,
-  // UPDATE_FAILED,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
+
 } from "../actions/auth-actions.js";
 
 const initialState = {
@@ -82,77 +82,71 @@ export const authReducer = (state = initialState, action) => {
         requestFailed: true,
       };
     }
-    // case SEND_LOGOUT_REQUEST: {
-    //   return {
-    //     ...state,
-    //     sendRequest: true,
-    //   };
-    // }
-    // case LOGOUT_SUCCESSED: {
-    //   return {
-    //     ...initialState,
-    //   };
-    // }
-    // case LOGOUT_FAILED: {
-    //   return {
-    //     ...state,
-    //     sendRequest: false,
-    //     requestFailed: true,
-    //   };
-    // }
-    // case CHECK_TOKEN_REQUEST: {
-    //   return {
-    //     ...state,
-    //     sendRequest: true,
-    //     requestFailed: false,
-    //   };
-    // }
-    // case CHECK_TOKEN_SUCCESSED: {
-    //   return {
-    //     isAuthChecked: true,
-    //     data: payload,
-    //     sendRequest: false,
-    //     requestFailed: false,
-    //   };
-    // }
-    // case CHECK_TOKEN_UNSUCCESSED: {
-    //   return {
-    //     isAuthChecked: true,
-    //     data: null,
-    //     sendRequest: false,
-    //     requestFailed: false,
-    //   };
-    // }
-    // case CHECK_TOKEN_FAILED: {
-    //   return {
-    //     isAuthChecked: true,
-    //     data: null,
-    //     sendRequest: false,
-    //     requestFailed: true,
-    //   };
-    // }
-    // case SEND_UPDATE_REQUEST: {
-    //   return {
-    //     ...state,
-    //     sendRequest: true,
-    //     requestFailed: false,
-    //   };
-    // }
-    // case UPDATE_SUCCESSED: {
-    //   return {
-    //     isAuthChecked: true,
-    //     data: payload,
-    //     sendRequest: false,
-    //     requestFailed: false,
-    //   };
-    // }
-    // case UPDATE_FAILED: {
-    //   return {
-    //     ...state,
-    //     sendRequest: false,
-    //     requestFailed: true,
-    //   };
-    // }
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        isRequest: true,
+      }
+    }
+
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        isAuth: true,
+        user: payload,
+        isRequest: false
+      }
+    }
+
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        isAuth: false,
+        user: null,
+        isRequest: false
+      }
+    }
+
+    case LOGOUT_REQUEST: {
+      return {
+        ...state,
+        isRequest: true,
+      };
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...initialState,
+      };
+    }
+    case LOGOUT_FAILED: {
+      return {
+        ...state,
+        isRequest: false,
+        requestFailed: true,
+      };
+    }
+    case UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        isRequest: true,
+        requestFailed: false,
+      };
+    }
+    case UPDATE_USER_SUCCESS: {
+      return {
+        isAuth: true,
+        user: payload,
+        isRequest: false,
+        requestFailed: false,
+      };
+    }
+    case UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        isRequest: false,
+        requestFailed: true,
+      };
+    }
     default: {
       return state;
     }

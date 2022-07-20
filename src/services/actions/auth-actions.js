@@ -1,16 +1,6 @@
-import { login, register, logout } from "../../utils/api";
+import { login, register, logout, fetchWithRefresh } from "../../utils/api";
 import { setCookie, getCookie, removeCookie } from "../../utils/cookies";
-
-// const setCookie = (name, value) => document.cookie = `${name}=${value}`;
-
-// const getCookie = (name) => {
-//   const matches = document.cookie.match(
-//     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-//   );
-//   return matches ? decodeURIComponent(matches[1]) : undefined;
-// }
-
-// const removeCookie = (name) => document.cookie = `${name}=;expires=${new Date(0)}`;
+import { apiConfig } from "../../constants/api-config";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -24,18 +14,13 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 
-// export const SEND_LOGOUT_REQUEST = "SEND_LOGOUT_REQUEST";
-// export const LOGOUT_SUCCESSED = "LOGOUT_SUCCESSED";
-// export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const GET_USER_REQUEST = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
 
-export const CHECK_TOKEN_REQUEST = "CHECK_TOKEN_REQUEST";
-export const CHECK_TOKEN_SUCCESS = "CHECK_TOKEN_SUCCESS";
-export const CHECK_TOKEN_NOT_SUCCESS = "CHECK_TOKEN_NOT_SUCCESS";
-export const CHECK_TOKEN_FAILED = "CHECK_TOKEN_FAILED";
-
-// export const SEND_UPDATE_REQUEST = "SEND_UPDATE_REQUEST";
-// export const UPDATE_SUCCESSED = "UPDATE_SUCCESSED";
-// export const UPDATE_FAILED = "UPDATE_FAILED";
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 
 export const loginRequest = () => ({
   type: LOGIN_REQUEST,
@@ -63,19 +48,59 @@ export const registerFailed =() => ({
   type: REGISTER_FAILED
 })
 
+export const logoutRequest = () => ({
+  type: LOGOUT_REQUEST,
+})
+
+export const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+})
+
+export const logoutFailed = () => ({
+  type: LOGOUT_FAILED,
+})
+
+export const getUserRequest = () => ({
+  type: GET_USER_REQUEST,
+})
+
+export const getUserSuccess = (userData) => ({
+  type: GET_USER_SUCCESS,
+  payload: userData
+})
+
+export const getUserFailed = () => ({
+  type: GET_USER_FAILED,
+})
+
+export const updateUserRequest = () => ({
+  type: UPDATE_USER_REQUEST,
+})
+
+export const updateUserSuccess = (userData) => ({
+  type: UPDATE_USER_SUCCESS,
+  payload: userData
+})
+
+export const updateUserFailed = () => ({
+  type: UPDATE_USER_FAILED,
+})
 
 export function loginUser(user) {
   return function (dispatch) {
     dispatch(loginRequest());
     login(user)
       .then((res) => {
-        dispatch(loginSuccess(res.user));
-        setCookie('token', res.accessToken.split('Bearer ')[1]);
-        localStorage.setItem("refreshToken", res.refreshToken);
+        if (res.success) {
+          dispatch(loginSuccess(res.user));
+          setCookie('token', res.accessToken.split('Bearer ')[1]);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          console.log(localStorage.getItem('refreshToken'));
+        }
       })
       .catch((err) => {
         dispatch(loginFailed());
-        alert('Неверный логин или пароль');
+        alert(err);
       });
   };
 }
@@ -98,140 +123,70 @@ export function registerUser(user) {
   };
 }
 
-// export function sendLogoutRequest() {
-//   return function (dispatch) {
-//     dispatch({
-//       type: SEND_LOGOUT_REQUEST,
-//     });
+export function logoutUser() {
+  return function (dispatch) {
+    dispatch(logoutRequest());
+    const data = {
+      token: localStorage.getItem('refreshToken'),
+    };
+    logout(data)
+      .then((res) => {
+        if (res.success) {
+          localStorage.removeItem('refreshToken');
+          removeCookie('token');
+          dispatch(logoutSuccess());
+        }
+      })
+      .catch((err) => {
+        dispatch(logoutFailed());
+        alert(err);
+      });
+  };
+}
 
-//     const data = {
-//       token: localStorage.getItem("refreshToken"),
-//     };
+export function getUserInfo() {
+  const accessToken = getCookie('token');
+  return function (dispatch) {
+    dispatch(getUserRequest());
+    fetchWithRefresh(`${apiConfig.baseURL}/${apiConfig.endpoints.user}`, {
+      method: 'GET',
+      headers: {
+        ...apiConfig.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (res.success) {
+          dispatch(getUserSuccess(res.user));
+        }
+      })
+      .catch((err) => {
+        dispatch(getUserFailed());
+        // alert(err);
+      });
+  };
+}
 
-//     api.logoutFromAccount(data)
-//       .then((res) => {
-//         if (res.success) {
-//           localStorage.removeItem("refreshToken");
-//           removeCookie("token");
-
-//           dispatch({
-//             type: LOGOUT_SUCCESSED,
-//           });
-//         }
-//       })
-//       .catch((err) => {
-//         dispatch({
-//           type: LOGOUT_FAILED,
-//         });
-//         logErrorToConsole(err);
-//       });
-//   };
-// }
-
-// export function checkAuthUser() {
-//   return function (dispatch) {
-//     dispatch({
-//       type: CHECK_TOKEN_REQUEST,
-//     });
-
-//     api.getUserData()
-//       .then((res) => {
-//         dispatch({
-//           type: CHECK_TOKEN_SUCCESSED,
-//           payload: res.user,
-//         });
-//       })
-//       .catch((err) => {
-//         if (err === "401 Unauthorized") {
-//           dispatch({
-//             type: CHECK_TOKEN_UNSUCCESSED,
-//           });
-//         } else {
-//           dispatch({
-//             type: CHECK_TOKEN_FAILED,
-//           });
-//           logErrorToConsole(err);
-//         }
-//       });
-//   };
-// }
-
-// export function updateUserInfo(data) {
-//   return function (dispatch) {
-//     dispatch({
-//       type: SEND_UPDATE_REQUEST,
-//     });
-
-//     api.updateUserData(data)
-//       .then((res) => {
-//         dispatch({
-//           type: UPDATE_SUCCESSED,
-//           payload: res.user,
-//         });
-//       })
-//       .catch((err) => {
-//         dispatch({
-//           type: UPDATE_FAILED,
-//         });
-//         logErrorToConsole(err);
-//       });
-//   };
-// }
-
-// --------- !!! ----------
-
-// import {baseUrl, checkResponse} from '../../utils/utils.js';
-
-// const LOGIN = 'LOGIN';
-// const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-// const LOGIN_FAILED = 'LOGIN_FAILED';
-
-// function login(email, password) {
-
-//   return function(dispatch) {
-//     dispatch({
-//       type: LOGIN,
-//       isLoading: true,
-//       isFailed: false,
-//       isAuth: false
-//     })
-
-//     fetch(`${baseUrl}/auth/login`,
-//       {
-//         method: 'POST',
-//         mode: 'cors',
-//         cache: 'no-cache',
-//         credentials: 'same-origin',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         redirect: 'follow',
-//         referrerPolicy: 'no-referrer',
-//         body: JSON.stringify({
-//           "email": email,
-//           "password": password
-//         })
-//       }
-//     )
-//     .then(checkResponse)
-//     .then(res => dispatch({
-//       type: LOGIN_SUCCESS,
-//       isLoading: false,
-//       isFailed: false,
-//       user: res.user,
-//       accessToken: res.accessToken,
-//       refreshToken: res.refreshToken,
-//       isAuth: true,
-//       isLogoutChecked: true
-//     }))
-//     .catch(err => dispatch({
-//       type: LOGIN_FAILED,
-//       isLoading: false,
-//       isFailed: true,
-//       isAuth: false,
-//       isLogoutChecked: true
-//     }))
-//   }
-// }
-
-// export {LOGIN, LOGIN_SUCCESS, LOGIN_FAILED, login};
+export function updateUserInfo(body) {
+  const accessToken = getCookie('token');
+  return function (dispatch) {
+    dispatch(updateUserRequest());
+    fetchWithRefresh(`${apiConfig.baseURL}/${apiConfig.endpoints.user}`, {
+      method: 'PATCH',
+      headers: {
+        ...apiConfig.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        if (res.success) {
+          dispatch(updateUserSuccess(res.user));
+        }
+      })
+      .catch((err) => {
+        dispatch(updateUserFailed());
+        alert(err);
+      });
+  };
+}

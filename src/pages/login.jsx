@@ -27,7 +27,7 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
+    setUserData({ ...userData, [name]: value });
   };
 
   const { from } = location.state || { from: { pathname: '/' } };

@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,7 +10,10 @@ import { addIngredient } from '../../services/actions/burger-constructor-actions
 
 function BurgerConstructor() {
   const { bun, toppings } = useSelector(store => store.burgerConstructor);
+  const { user } = useSelector(store => store.auth);
+
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const totalPrice = useMemo(
     () => {
@@ -18,13 +22,22 @@ function BurgerConstructor() {
     }, [bun, toppings]
   )
 
+  // const handleOrderButtonClick = () => {
+  //   // const bunId = bun ? [bun._id] : [];
+  //   // const toppingsIds = toppings.length ? toppings.map(i => i._id) : [];
+  //   // const ids = [...bunId, ...toppingsIds];
+  //   const ids = bun && toppings.length ? [bun._id, ...toppings.map(i => i._id)] : [];
+  //   dispatch(sendOrder(ids));
+  // }
+
   const handleOrderButtonClick = () => {
-    // const bunId = bun ? [bun._id] : [];
-    // const toppingsIds = toppings.length ? toppings.map(i => i._id) : [];
-    // const ids = [...bunId, ...toppingsIds];
-    const ids = bun && toppings.length ? [bun._id, ...toppings.map(i => i._id)] : [];
+    if(user) {
+      const ids = bun && toppings.length ? [bun._id, ...toppings.map(i => i._id)] : [];
     dispatch(sendOrder(ids));
-  }
+    } else {
+      history.push('/login');
+    }
+  };
 
   const [{isHover}, dropTargetRef] = useDrop({
     accept: 'ingredient',

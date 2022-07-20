@@ -37,7 +37,15 @@ const ForgotPasswordPage = () => {
       })
   };
 
-
+  if (user) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    )
+  };
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Redirect, Link, useLocation } from 'react-router-dom';
+import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
 import Preloader from '../components/preloader/preloader';
@@ -7,16 +7,14 @@ import { changePassword } from '../utils/api';
 
 const ResetPasswordPage = () => {
   const location = useLocation();
+  const history = useHistory();
 
   const [data, setData] = useState({
     password: '',
     token: '',
   });
 
-  const [state, setState] = useState({
-    isRequest: false,
-    isSuccess: false
-  });
+  const [isRequest, setRequest] = useState(false);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +23,15 @@ const ResetPasswordPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setState({...state, isRequest: true});
+    setRequest(true);
     changePassword(data)
       .then((res) => {
-        setState({...state, isRequest: false, isSuccess: true});
+        setRequest(false);
+        history.replace({pathname: '/profile'});
       })
       .catch((err) => {
+        setRequest(false);
         alert(err);
-      })
-      .finally(() => {
-        setState({...state, isRequest: false});
       })
   };
 
@@ -50,16 +47,8 @@ const ResetPasswordPage = () => {
 
   return (
     <>
-      {state.isRequest && <Preloader />}
+      {isRequest && <Preloader />}
 
-      {state.isSuccess ? (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: '/reset-password' }
-          }}
-        />
-        ) : (
         <div className={styles.container}>
           <h1 className='mb-6 text text_type_main-medium'>Восстановление пароля</h1>
           <form className={`mb-20 ${styles.form}`} onSubmit={onSubmit}>
@@ -90,7 +79,7 @@ const ResetPasswordPage = () => {
             Вспомнили пароль? <Link to='/login' className={styles.link}>Войти</Link>
           </p>
         </div>
-      )}
+
     </>
 
   );

@@ -1,0 +1,23 @@
+.menu {
+  max-width: 320px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 80px;
+}
+
+.list-item {
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.active {
+  color: #F2F2F3;
+}
