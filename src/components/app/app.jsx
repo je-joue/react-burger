@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage } from '../../pages';
+import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage, FeedPage } from '../../pages';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -60,15 +60,29 @@ function App() {
           <Route path='/register' exact={true}>
             <RegistrationPage/>
           </Route>
-          <Route path='/forgot-password'>
+          <Route path='/forgot-password' exact={true}>
             <ForgotPasswordPage />
           </Route>
-          <Route path='/reset-password'>
+          <Route path='/reset-password' exact={true}>
             <ResetPasswordPage />
           </Route>
+          <Route path='/feed' exact={true}>
+            <FeedPage />
+          </Route>
+          {/* <Route
+            path='/feed/:id'
+            children={<OrderInfo />}
+          /> */}
           <ProtectedRoute path='/profile' exact={true}>
             <ProfilePage />
           </ProtectedRoute>
+          {/* <ProtectedRoute path='/profile/orders' exact={true}>
+            <ProfileOrdersPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            path='/profile/orders/:id'
+            children={<OrderInfo />}
+          /> */}
           <Route>
             <NotFoundPage/>
           </Route>
@@ -86,6 +100,29 @@ function App() {
           }
         />
       )}
+
+      {/* {background && (
+        <Route
+          path='/feed/:id'
+          children={
+            <Modal closeModal={() => history.goBack()} >
+              <OrderInfo />
+            </Modal>
+          }
+        />
+      )} */}
+
+      {/* {background && (
+        <Route
+          path='/profile/orders/:id'
+          children={
+            <Modal closeModal={() => history.goBack()} >
+              <OrderInfo />
+            </Modal>
+          }
+        />
+      )} */}
+
 
       {isOrderDetailsOpen &&
         <Modal closeModal={closeOrderDetailsModal}>

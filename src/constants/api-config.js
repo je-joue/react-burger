@@ -15,3 +15,4 @@ export const apiConfig = {
     'Content-Type': 'application/json'
   }
 }
+

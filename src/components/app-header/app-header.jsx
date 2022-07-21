@@ -14,8 +14,8 @@ function AppHeader() {
           </NavLink>
 
 
-          <NavLink className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5 text text_type_main-default`} activeClassName={`${styles['header__menu-item_active']}`} to='/orders-history'>
-            <ListIcon type={pathname === '/orders-history' ? 'primary' : 'secondary'} />
+          <NavLink className={`${styles['header__menu-item']} mt-4 mr-7 mb-4 ml-5 text text_type_main-default`} activeClassName={`${styles['header__menu-item_active']}`} to='/feed'>
+            <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />
             <span className='ml-2'>Лента заказов</span>
           </NavLink>
         </div>
