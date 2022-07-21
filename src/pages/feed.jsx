@@ -31,7 +31,7 @@ function FeedPage() {
             {/* <BurgerIngredients ingredients={ingredients} />
             <BurgerConstructor /> */}
             <div>rgssdgd</div>
-            <div>gdfgfg</div>
+            <div>gdfgf</div>
           </div>
         </>
       )}
