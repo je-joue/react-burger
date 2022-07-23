@@ -5,7 +5,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-} from "../actions/orders";
+} from "../actions/ws-actions";
 
 const wsMiddleware = () => {
   return (store) => {
@@ -30,10 +30,7 @@ const wsMiddleware = () => {
         };
 
         socket.onmessage = (event) => {
-
-          const { data } = event;
-          console.log(data);
-          dispatch({ type: WS_GET_ORDERS, payload: data });
+          dispatch({ type: WS_GET_ORDERS, payload: event.data });
         };
 
         socket.onclose = (event) => {
@@ -46,4 +43,4 @@ const wsMiddleware = () => {
   };
 };
 
-export default socketMiddleware;
+export default wsMiddleware;

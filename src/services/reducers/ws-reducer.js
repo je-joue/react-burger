@@ -52,18 +52,16 @@ export const wsReducer = (state = initialState, action) => {
       };
     }
     case WS_GET_ORDERS: {
-      const { orders, total, totalToday } = JSON.parse(payload);
-      const filteredOrders = orders.filter((order) => {
+      const data = JSON.parse(payload);
+      const filteredOrders = data.orders.filter((order) => {
         return order.ingredients.every((el) => el !== null);
+        // return order.ingredients.length > 1;
       });
 
       return {
         ...state,
         error: undefined,
-        orders: filteredOrders
-        // orders: filteredOrders,
-        // total,
-        // totalToday,
+        orders: {...data, orders: filteredOrders},
       };
     }
     default:

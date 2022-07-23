@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage, FeedPage } from '../../pages';
+import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage, FeedPage, ProfileOrdersPage } from '../../pages';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfo from '../order-info/order-info';
 import ProtectedRoute from '../protected-route/protected-route';
 import { getIngredients } from '../../services/actions/burger-data-actions';
 import { getUserInfo } from '../../services/actions/auth-actions';
@@ -69,20 +70,20 @@ function App() {
           <Route path='/feed' exact={true}>
             <FeedPage />
           </Route>
-          {/* <Route
+          <Route
             path='/feed/:id'
             children={<OrderInfo />}
-          /> */}
+          />
           <ProtectedRoute path='/profile' exact={true}>
             <ProfilePage />
           </ProtectedRoute>
-          {/* <ProtectedRoute path='/profile/orders' exact={true}>
+          <ProtectedRoute path='/profile/orders'>
             <ProfileOrdersPage />
           </ProtectedRoute>
           <ProtectedRoute
             path='/profile/orders/:id'
             children={<OrderInfo />}
-          /> */}
+          />
           <Route>
             <NotFoundPage/>
           </Route>
@@ -101,7 +102,7 @@ function App() {
         />
       )}
 
-      {/* {background && (
+      {background && (
         <Route
           path='/feed/:id'
           children={
@@ -110,9 +111,9 @@ function App() {
             </Modal>
           }
         />
-      )} */}
+      )}
 
-      {/* {background && (
+      {background && (
         <Route
           path='/profile/orders/:id'
           children={
@@ -121,7 +122,7 @@ function App() {
             </Modal>
           }
         />
-      )} */}
+      )}
 
 
       {isOrderDetailsOpen &&

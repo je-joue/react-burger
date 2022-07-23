@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  max-width: 1240px;
+}
