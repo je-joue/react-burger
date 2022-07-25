@@ -18,10 +18,6 @@ function App() {
   const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
 
-  const history = useHistory();
-  const location = useLocation();
-  const background = location.state?.background;
-
   useEffect(
     () => {
       dispatch(getIngredients());
@@ -39,6 +35,10 @@ function App() {
       dispatch(resetConstructor());
     }
   };
+
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state?.background;
 
   return (
     <div className={styles.app}>

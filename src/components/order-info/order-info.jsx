@@ -62,8 +62,8 @@ function OrderInfo() {
           <div>
             <p className='text text_type_main-medium mb-8'>Состав:</p>
             <ul className={styles.list}>
-              {getIngredientsInfo(currentOrder, ingredients).map((item) => (
-                <li className={`${styles['list-item']} ${styles.row}`}>
+              {getIngredientsInfo(currentOrder, ingredients).map((item, index) => (
+                <li key={index} className={`${styles['list-item']} ${styles.row}`}>
                   <div className={styles.row}>
                     <div className={styles['icon-wrapper']}>
                       <IngredientIcon image={item.image} />

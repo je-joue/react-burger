@@ -25,8 +25,6 @@ function OrdersList() {
 
   const more = (order) => order.ingredients.length - 6;
 
-  // console.log(getIngredientsInfo(orders[1], ingredients));
-
   return (
     <section className={styles.container}>
       <ul className={`${styles['orders-list']} ${styles.list}`}>

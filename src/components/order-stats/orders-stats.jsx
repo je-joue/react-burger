@@ -5,8 +5,6 @@ import styles from './orders-stats.module.css';
 
 function OrdersStats() {
   const { orders, total, totalToday } = useSelector(store => store.ws.orders);
-  console.log(orders);
-
   const [ordersDone, setOrdersDone] = useState([]);
   const [ordersInProcess, setOrdersInProcess] = useState([]);
 

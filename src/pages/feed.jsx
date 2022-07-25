@@ -5,8 +5,6 @@ import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../services/actions/w
 
 import styles from './feed.module.css';
 
-// import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
-// import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import Preloader from '../components/preloader/preloader';
 import OrdersStats from '../components/order-stats/orders-stats';
 import OrdersList from '../components/orders-list/orders-list';

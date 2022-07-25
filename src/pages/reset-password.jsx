@@ -31,7 +31,7 @@ const ResetPasswordPage = () => {
       })
       .catch((err) => {
         setRequest(false);
-        alert(err);
+        alert(err.message);
       })
   };
 
