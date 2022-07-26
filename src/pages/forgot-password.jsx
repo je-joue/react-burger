@@ -33,7 +33,7 @@ const ForgotPasswordPage = () => {
       })
       .catch((err) => {
         setRequest(false);
-        alert(err);
+        alert(err.message);
       })
   };
 

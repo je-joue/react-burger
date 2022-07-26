@@ -23,7 +23,7 @@ function BurgerIngredient({ ingredient, counter }) {
   //   },
   //   [dispatch]
   // );
-  const handleIngredientClick = () => history.push(`/ingredients/${ingredient._id}`, { background: location })
+  const handleIngredientClick = () => history.push(`/ingredients/${ingredient._id}`, { background: location });
 
   return (
     <li className={`${styles['ingredient-card']} pr-4 pl-4`} onClick={handleIngredientClick} ref={dragRef}>
@@ -38,7 +38,8 @@ function BurgerIngredient({ ingredient, counter }) {
   );
 }
 
-export default React.memo(BurgerIngredient);
+// export default React.memo(BurgerIngredient);
+export default BurgerIngredient;
 
 BurgerIngredient.propTypes = {
   ingredient: ingredientPropType.isRequired,

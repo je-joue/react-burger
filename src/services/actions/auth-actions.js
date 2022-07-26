@@ -99,7 +99,7 @@ export function loginUser(user) {
       })
       .catch((err) => {
         dispatch(loginFailed());
-        alert(err);
+        alert(`Ошибка: ${err.message}`);
       });
   };
 }
@@ -117,7 +117,7 @@ export function registerUser(user) {
       })
       .catch((err) => {
         dispatch(registerFailed());
-        alert('Произошла ошибка')
+        alert(`Ошибка: ${err.message}`);
       })
   };
 }
@@ -138,7 +138,7 @@ export function logoutUser() {
       })
       .catch((err) => {
         dispatch(logoutFailed());
-        alert(err);
+        alert(`Ошибка: ${err.message}`);
       });
   };
 }
@@ -185,7 +185,7 @@ export function updateUserInfo(body) {
       })
       .catch((err) => {
         dispatch(updateUserFailed());
-        alert(err);
+        alert(`Ошибка: ${err.message}`);
       });
   };
 }

@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage } from '../../pages';
+import { MainPage, LoginPage, RegistrationPage, ProfilePage, ForgotPasswordPage, ResetPasswordPage, NotFoundPage, FeedPage, ProfileOrdersPage } from '../../pages';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfo from '../order-info/order-info';
 import ProtectedRoute from '../protected-route/protected-route';
 import { getIngredients } from '../../services/actions/burger-data-actions';
 import { getUserInfo } from '../../services/actions/auth-actions';
@@ -16,10 +17,6 @@ import { closeOrderDetails } from '../../services/actions/order-details-action';
 function App() {
   const { isOrderDetailsOpen, order } = useSelector(store => store.orderDetails);
   const dispatch = useDispatch();
-
-  const history = useHistory();
-  const location = useLocation();
-  const background = location.state?.background;
 
   useEffect(
     () => {
@@ -38,6 +35,10 @@ function App() {
       dispatch(resetConstructor());
     }
   };
+
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state?.background;
 
   return (
     <div className={styles.app}>
@@ -60,15 +61,29 @@ function App() {
           <Route path='/register' exact={true}>
             <RegistrationPage/>
           </Route>
-          <Route path='/forgot-password'>
+          <Route path='/forgot-password' exact={true}>
             <ForgotPasswordPage />
           </Route>
-          <Route path='/reset-password'>
+          <Route path='/reset-password' exact={true}>
             <ResetPasswordPage />
           </Route>
+          <Route path='/feed' exact={true}>
+            <FeedPage />
+          </Route>
+          <Route
+            path='/feed/:id'
+            children={<OrderInfo />}
+          />
           <ProtectedRoute path='/profile' exact={true}>
             <ProfilePage />
           </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders'>
+            <ProfileOrdersPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            path='/profile/orders/:id'
+            children={<OrderInfo />}
+          />
           <Route>
             <NotFoundPage/>
           </Route>
@@ -86,6 +101,29 @@ function App() {
           }
         />
       )}
+
+      {background && (
+        <Route
+          path='/feed/:id'
+          children={
+            <Modal closeModal={() => history.goBack()} >
+              <OrderInfo />
+            </Modal>
+          }
+        />
+      )}
+
+      {background && (
+        <Route
+          path='/profile/orders/:id'
+          children={
+            <Modal closeModal={() => history.goBack()} >
+              <OrderInfo />
+            </Modal>
+          }
+        />
+      )}
+
 
       {isOrderDetailsOpen &&
         <Modal closeModal={closeOrderDetailsModal}>

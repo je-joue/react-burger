@@ -1,0 +1,28 @@
+.ingredient-icon {
+  width: 64px;
+  height: 64px;
+  top: 0;
+}
+
+.ingredient-icon-image {
+  background-position: center;
+  background-size: cover;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ingredient-icon-border {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(var(--background) 0 0) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+}

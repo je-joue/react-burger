@@ -1,10 +1,13 @@
 import { apiConfig } from '../constants/api-config';
+import { getCookie } from './cookies';
 
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json()
   }
-  return Promise.reject(`Ошибка: ${res.status}`)
+  // return Promise.reject(`Ошибка: ${res.status}`)
+  // return Promise.reject(res);
+  return res.json().then((res) => Promise.reject(res));
 }
 
 export const fetchIngredients = async () => {
@@ -17,7 +20,10 @@ export const fetchIngredients = async () => {
 export async function postOrder(data) {
   const res = await fetch(`${apiConfig.baseURL}/${apiConfig.endpoints.orders}`, {
     method: 'POST',
-    headers: apiConfig.headers,
+    headers: {
+      ...apiConfig.headers,
+      Authorization: `Bearer ${getCookie('token')}`
+    },
     body: JSON.stringify({
       "ingredients": data
     })
@@ -78,7 +84,7 @@ export async function fetchWithRefresh(url, options) {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === 'jwt malformed') {
+    if (err.message === 'jwt expired') {
       const refreshData = await updateToken();
       options.headers.Authorization = refreshData.accessToken;
       const res = await fetch(url, options);
